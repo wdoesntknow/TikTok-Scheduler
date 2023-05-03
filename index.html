@@ -1,11 +1,47 @@
+<!-- tiktok_scheduler.html -->
 <!DOCTYPE html>
 <html>
 <head>
 	<title>TikTok Scheduler</title>
 </head>
 <body>
-	<h1>Welcome to TikTok Scheduler!</h1>
-	<p>This is a website for scheduling your TikTok posts.</p>
-	<p>Stay tuned for more updates!</p>
-</body>
-</html>
+	<form method="post">
+		{% csrf_token %}
+		<label for="account-select">Select an account:</label>
+		<select id="account-select" name="account">
+			<option value="Account 1">Account 1</option>
+			<option value="Account 2">Account 2</option>
+			<option value="Account 3">Account 3</option>
+		</select>
+
+		<label for="file-input">Select File:</label>
+		<input type="file" id="file-input" name="file" accept=".mp4, .mov">
+
+		<label for="title-input">Title:</label>
+		<input type="text" id="title-input" name="title">
+
+		<label for="hashtags-input">Hashtags:</label>
+		<input type="text" id="hashtags-input" name="hashtags">
+
+		<label for="date-select">Scheduled date (MM/DD/YYYY):</label>
+		<select id="date-select" name="date">
+			{% for date in date_values %}
+				<option value="{{ date }}">{{ date }}</option>
+			{% endfor %}
+		</select>
+
+		<label for="time-select">Scheduled time:</label>
+		<select id="time-select" name="time">
+			<option value="01:00:00">01 AM</option>
+			<option value="02:00:00">02 AM</option>
+			<option value="03:00:00">03 AM</option>
+			<option value="04:00:00">04 AM</option>
+			<option value="05:00:00">05 AM</option>
+			<option value="06:00:00">06 AM</option>
+			<option value="07:00:00">07 AM</option>
+			<option value="08:00:00">08 AM</option>
+			<option value="09:00:00">09 AM</option>
+			<option value="10:00:00">10 AM</option>
+			<option value="11:00:00">11 AM</option>
+			<option value="12:00:00">12 PM</option>
+			<option value="13:00:00">01
