@@ -1,47 +1,185 @@
-<!-- tiktok_scheduler.html -->
 <!DOCTYPE html>
 <html>
 <head>
-	<title>TikTok Scheduler</title>
+	<title>TikTok Post Scheduler</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,800&display=swap" rel="stylesheet">
+	<style>
+		body {
+			font-family: 'Open Sans', sans-serif;
+			background-color: #f5f5f5;
+			margin: 0;
+			padding: 0;
+		}
+		
+		header {
+			background-color: #222;
+			color: #fff;
+			padding: 20px;
+			text-align: center;
+		}
+		
+		h1 {
+			margin: 0;
+			font-size: 3em;
+		}
+		
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0,0,0,0.1);
+		}
+		
+		label {
+			display: block;
+			margin-bottom: 10px;
+			font-size: 1.2em;
+			font-weight: bold;
+		}
+		
+		select,
+		input[type="file"] {
+			display: block;
+			margin-bottom: 20px;
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			background-color: #f5f5f5;
+			box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+			font-size: 1.2em;
+			font-weight: bold;
+			color: #333;
+			cursor: pointer;
+		}
+		
+		input[type="submit"] {
+			display: block;
+			margin: 20px auto 0;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			background-color: #222;
+			color: #fff;
+			font-size: 1.2em;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		
+		img {
+			float: right;
+			max-width: 200px;
+			margin: 0 0 20px 20px;
+		}
+		
+		@media (max-width: 767px) {
+			.container {
+				padding: 10px;
+			}
+			
+			h1 {
+				font-size: 2em;
+			}
+			
+			select,
+			input[type="file"] {
+				font-size: 1em;
+			}
+		}
+        .time {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .digit {
+            font-size: 3em;
+            font-weight: bold;
+        }
+
+        .separator {
+            margin: 0 10px;
+            font-size: 3em;
+            font-weight: bold;
+        }
+	</style>
 </head>
 <body>
-	<form method="post">
-		{% csrf_token %}
-		<label for="account-select">Select an account:</label>
-		<select id="account-select" name="account">
-			<option value="Account 1">Account 1</option>
-			<option value="Account 2">Account 2</option>
-			<option value="Account 3">Account 3</option>
-		</select>
-
-		<label for="file-input">Select File:</label>
-		<input type="file" id="file-input" name="file" accept=".mp4, .mov">
-
-		<label for="title-input">Title:</label>
-		<input type="text" id="title-input" name="title">
-
-		<label for="hashtags-input">Hashtags:</label>
-		<input type="text" id="hashtags-input" name="hashtags">
-
-		<label for="date-select">Scheduled date (MM/DD/YYYY):</label>
-		<select id="date-select" name="date">
-			{% for date in date_values %}
-				<option value="{{ date }}">{{ date }}</option>
-			{% endfor %}
-		</select>
-
-		<label for="time-select">Scheduled time:</label>
-		<select id="time-select" name="time">
-			<option value="01:00:00">01 AM</option>
-			<option value="02:00:00">02 AM</option>
-			<option value="03:00:00">03 AM</option>
-			<option value="04:00:00">04 AM</option>
-			<option value="05:00:00">05 AM</option>
-			<option value="06:00:00">06 AM</option>
-			<option value="07:00:00">07 AM</option>
-			<option value="08:00:00">08 AM</option>
-			<option value="09:00:00">09 AM</option>
-			<option value="10:00:00">10 AM</option>
-			<option value="11:00:00">11 AM</option>
-			<option value="12:00:00">12 PM</option>
-			<option value="13:00:00">01
+	<header>
+		<h1>TikTok Post Scheduler</h1>
+	</header>
+	<div class="container">
+		<form>
+			<label for="account">Select Account:</label>
+			<select id="account" name="account">
+				<option value="account1">Account 1</option>
+				<option value="account2">Account 2</option>
+				<option value="account3">Account 3</option>
+			</select>
+			<label for="video">Upload Video:</label>
+			<input type="file" id="video" name="video">
+			<input type="submit" value="Schedule Post">
+		</form>
+		<style>
+			.input-group {
+				display: flex;
+				align-items: center;
+				margin-bottom: 10px;
+			}
+			.input-group label {
+				margin-right: 5px;
+			}
+			#hour, #minute {
+				width: 50px;
+				margin-right: 5px;
+			}
+		</style>
+		
+		<div class="time-container">
+			<div class="input-container">
+			  <label for="hour">Hour:</label>
+			  <input type="number" id="hour" name="hour" min="0" max="12">
+			</div>
+		  
+			<div class="input-container">
+			  <label for="minute">Minute:</label>
+			  <input type="number" id="minute" name="minute" min="0" max="59">
+			</div>
+		  
+			<div class="input-container">
+			  <select id="am-pm" name="am-pm">
+				<option value="am">AM</option>
+				<option value="pm">PM</option>
+			  </select>
+			</div>
+		  </div>
+		  
+		  <style>
+			.time-container {
+			  display: flex;
+			  align-items: center;
+			}
+		  
+			.input-container {
+			  display: flex;
+			  align-items: center;
+			  margin-right: 10px; /* Add some spacing between the inputs */
+			  margin-top: auto;
+			}
+		  
+			#am-pm {
+			  width: 70px;
+			  height: 30px;
+			  border: 1px solid #ccc;
+			  border-radius: 4px;
+			  padding: 4px;
+			  box-sizing: border-box;
+			}
+		  </style>
+		  
+		  
+		  
+		
+		
